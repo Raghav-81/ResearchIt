@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.css"
 import UserContext from "./components/context/UserContext"
 import NavBar from "./components/NavBar"
 import Trending from "./components/Trending"
-import Home from "./components/Home"
+import {Home, Contact, About} from "./components/Home"
 import {Login, Register} from "./components/auth"
 import {Route,Switch,BrowserRouter} from "react-router-dom"
 function App(){
@@ -55,8 +55,9 @@ function App(){
               
               <Route exact path="/trending" component={Trending}/>
           
-            <Route path="/" component={Home}/>
-            <Route path = "/about" component = {Home}/>
+            <Route exact path="/" component={Home}/>
+            <Route path = "/about" component = {About}/>
+            <Route path = "/contact" component = {Contact}/>
         </Switch>
         </div>
       </UserContext.Provider>

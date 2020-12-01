@@ -3,3 +3,4 @@ User-agent: *
 Disallow: /api
 Disallow: /Login
 Disallow: /register
+Disallow: /Contact

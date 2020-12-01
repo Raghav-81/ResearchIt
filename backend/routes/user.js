@@ -108,6 +108,40 @@ router.post("/tokenIsValid", async (req, res) => {
   }
 });
 
+router.post("/contact", async(req,res) =>{
+  try{
+    const {name, email,phone,complain} = req.body;
+    if (!email || !name || !phone || !complain)
+      return res.status(400).json({ msg: "Not all fields have been entered." });
+    var transporter = require('nodemailer').createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.email,
+        pass: process.env.password,
+      }
+    }, function(error){
+      res.status(400).json({error: error})
+    });
+    var mailOptions = {
+      from: process.env.email,
+      to: process.env.email,
+      subject: 'Complain or Enquiry',
+      text: 'Name:' + name + "\nEmail:" + email + "\nPhone:" + phone +"\nMessage:" + complain,
+    };
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+  res.json(mailOptions)
+  } catch(err){
+    console.log(err)
+    res.status(500),json({error: err.message})
+  }
+
+});
 router.get("/", auth, async (req, res) => {
   const user = await User.findById(req.user);
   res.json({
