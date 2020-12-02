@@ -18,6 +18,7 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   },
   (err) => {
     if (err) throw err;
@@ -27,5 +28,8 @@ mongoose.connect(
 
 const users= require("./routes/user.js");
 app.use("/api/users", users);
+
+const posts = require("./routes/posts.js");
+app.use("/api/posts/",posts);
 
 app.listen(5000,() => console.log('Listening on 5000'))
