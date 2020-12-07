@@ -1,0 +1,56 @@
+.App{
+	background-color: black;
+}
+h3[id="headings"]{
+  position: relative;
+  padding: 0.25em 1em;
+  overflow: hidden;
+  background: linear-gradient(white, white) no-repeat top center, linear-gradient(white, white) no-repeat bottom center;
+  background-size: calc(100% - 1.7em) 1px;
+  text-align: center;
+  color: white;
+}
+
+li{
+	font-size: 20px;
+}
+.LoggedIN{
+  color: white;
+}
+
+.LogOut{
+  color: white;
+}
+.Login {
+    padding: 60px 0;
+    background-color: #353535;
+    width : 50%;
+    margin: auto;
+}
+
+.Login form {
+   margin: 0 auto;
+   max-width: 320px;
+   color: white;
+}
+
+.Register {
+    padding: 60px 0;
+    background-color: #353535;
+    width : 50%;
+    margin: auto;
+}
+
+.Register form {
+   margin: 0 auto;
+   max-width: 320px;
+   color: white;
+}
+
+.error-notice{
+  background-color: red;
+  width: 50%;
+  color: white;
+  margin: 0 auto;
+  text-align: center;
+}

@@ -1,0 +1,52 @@
+
+.card{
+	background-color: black;
+	margin: 0 auto;
+	color: white;
+	width: 75%;
+}
+
+.card img{
+	width: 100%;
+}
+
+a:link , a:visited {
+	text-decoration: none;
+	color : white;
+}
+a:hover{
+	color: blue;
+}
+
+button[className = "btn btn-dark"]:focus{
+    outline: none;
+}
+
+
+.carousel{
+	background-color: black;
+	margin: 0 auto;
+	width: 40%;
+}
+.carousel img{
+	width: 100%;
+}
+
+
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 55px;
+  color: black;
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 55px;
+  color: black;
+}
+
+.form-control{
+	background-color: black;
+	color : red;
+}
