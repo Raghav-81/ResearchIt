@@ -4,11 +4,13 @@ import Axios from  "axios";
 import "./App.css"
 import "bootstrap/dist/css/bootstrap.css"
 import UserContext from "./components/context/UserContext"
-import NavBar from "./components/NavBar"
-import Trending from "./components/Trending"
-import {Home, Contact, About} from "./components/Home"
-import {Login, Register} from "./components/auth"
+import NavBar from "./components/Pages/NavBar"
+import Trending from "./components/Pages/Trending"
+import {Home, Contact, About} from "./components/Pages/Home"
+import {Login, Register} from "./components/Pages/auth"
+import Profile from "./components/Pages/Profile"
 import {Route,Switch,BrowserRouter} from "react-router-dom"
+import Post from "./components/Helpers/NewPost"
 function App(){
   const [userData, setUserData] = useState({
     token: undefined,
@@ -32,7 +34,7 @@ function App(){
         });
         setUserData({
           token,
-          user: userRes.data,
+          user: userRes.data.id,
         });
       }
     };
@@ -54,10 +56,11 @@ function App(){
               <Route exact path = "/register" component = {Register}/>
               
               <Route exact path="/trending" component={Trending}/>
-          
+              <Route exact path = "/profile" component = {Profile}/>
             <Route exact path="/" component={Home}/>
             <Route path = "/about" component = {About}/>
             <Route path = "/contact" component = {Contact}/>
+            <Route path = "/newpost" component= {Post} />
         </Switch>
         </div>
       </UserContext.Provider>

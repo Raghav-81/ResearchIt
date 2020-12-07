@@ -1,16 +1,137 @@
-import React, { Component , useContext, useState} from 'react';
-import UserContext from "./context/UserContext";
+import React, { Component , useContext, useState, useEffect} from 'react';
+import UserContext from "../context/UserContext";
 import {Button , Card} from "react-bootstrap";
-import ErrorNotice from "./context/ErrorNotice"
+import {useHistory} from "react-router-dom"
+import ErrorNotice from "../Helpers/ErrorNotice"
 import axios from "axios";
+import { Document, Page,pdfjs } from 'react-pdf'; 
+import '../Helpers/pdf.css';
+import qs from "qs"
+
 export function Home(){
   const { userData, setUserData } = useContext(UserContext);
+  const [posts, setPosts] = useState(
+        [
+            {
+                likes: undefined,
+                comments: undefined,
+                id: undefined,
+                userId: undefined,
+                body: undefined
+            }
+        ]
+    );
+  const [postid, setPostId] = useState();
+  const history = useHistory(); 
+  pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`; 
+  const [numPages, setNumPages] = useState(null); 
+  const [pageNumber, setPageNumber] = useState(1);   
+  /*When document gets loaded successfully*/
+  function onDocumentLoadSuccess({ numPages }) { 
+    setNumPages(numPages); 
+    setPageNumber(1); 
+  } 
+
+  function changePage(offset) { 
+    setPageNumber(prevPageNumber => prevPageNumber + offset); 
+  } 
+
+  function previousPage() { 
+    changePage(-1); 
+  } 
+
+  function nextPage() { 
+    changePage(1); 
+  }       
+  const likes = async(id) =>{
+    try {
+            console.log(id)
+            console.log(userData.user)
+            let like = axios.post(
+                "http://localhost:5000/api/posts/likes",
+                {userid: userData.user ,postid :id},
+            );
+            window.location.reload()
+        } catch(err){
+          console.log(err);
+        }
+  }
+
+  useEffect(() => {
+        const getposts = async() =>{
+        try {
+            let token = localStorage.getItem("auth-token");
+
+            let postRes = await axios.get(
+                "http://localhost:5000/api/users/profile",
+                {
+                    headers: { "x-auth-token": token },
+                }
+            );
+            setPosts(postRes.data)
+            //console.log(postRes.data)
+        } catch (err) {
+            console.log(err)
+        }
+    };
+    getposts()
+    }, []);
   return (
     <div className = "LoggedIN">
      {userData.user?(
-      <p>
-      	Logged in
-      </p>
+      <div className="home" >
+        <Button variant="primary" href = "/newpost?fileuploaded=-1">New Post</Button>{' '}
+        {posts.map((post, index) => (
+          <>
+          <div className="card home-card" style = {{ "background-color": "grey" , 
+                                                      margin: "auto", width: "50%" ,padding: "10px"}}>
+            <div className="pdfpost">
+              <Document 
+              file={post.filename}
+              onLoadSuccess={onDocumentLoadSuccess} 
+              > 
+              <Page pageNumber={pageNumber} />
+              </Document>
+            </div>
+            <div> 
+          <div className="pagec"> 
+              Page {pageNumber || (numPages ? 1 : '--')} of {numPages || '--'} 
+          </div> 
+          <div className="buttonc"> 
+          <button 
+          type="button"
+          disabled={pageNumber <= 1} 
+          onClick={previousPage} 
+          className="Pre"> 
+            Previous 
+          </button> 
+        <button 
+        className="Nxt"
+        type="button"
+        disabled={pageNumber >= numPages} 
+        onClick={nextPage} > 
+          Next 
+        </button> 
+    </div> 
+  </div>    <div className="card-content">
+              <button type="button" className="btn btn-primary" 
+                onClick={() => {likes(post._id);}}>
+                <i className="far fa-heart" >
+                  Like
+                </i>
+              </button>
+              {post.likes}
+              <br />
+            <h6>{post.title}</h6>
+            <p>{post.body}</p>
+            
+          </div>
+
+      </div>
+      <br /><br /><br />
+      </>
+      ))}
+    </div>
      )
      :
      (

@@ -3,12 +3,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const User = require("../models/User");
-
+const Post = require("../models/Posts/Post");
 router.post("/register", async (req, res) => {
   try {
     let { email, password, passwordCheck, userName } = req.body;
-
-    // validate
 
     if (!email || !password || !passwordCheck || !userName)
       return res.status(400).json({ msg: "Not all fields have been entered." });
@@ -70,10 +68,7 @@ router.post("/Login", async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     res.json({
       token,
-      user: {
-        id: user._id,
-        Name: user.Name,
-      },
+      id: user._id,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -92,7 +87,6 @@ router.delete("/delete", auth, async (req, res) => {
 router.post("/tokenIsValid", async (req, res) => {
   try {
     const token = req.header("x-auth-token");
-    console.log(token.toString())
     if (!token) return res.json(false);
 
     const verified = jwt.verify(token.toString(), process.env.JWT_SECRET);
@@ -142,12 +136,22 @@ router.post("/contact", async(req,res) =>{
   }
 
 });
+
+router.get("/profile" ,auth, async(req,res) => {
+  try{
+    const user = await User.findById(req.user);  
+    const posts = await Post.find({userId: user._id})
+    res.send(posts)
+  } catch(err){
+    console.log(err)
+    res.status(500).json({error: err.message})
+  }
+})
+
 router.get("/", auth, async (req, res) => {
   const user = await User.findById(req.user);
   res.json({
-    Name: user.Name,
     id: user._id,
   });
 });
-
 module.exports = router;

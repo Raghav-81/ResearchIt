@@ -1,6 +1,6 @@
 import React , { useState } from 'react'
 import { Carousel } from 'react-bootstrap'
-import paper from '../paper.png'
+import paper from '../../paper.png'
 export const Topics = () => (
   <div className="row row-cols-2 row-cols-md-3">
     <div className="col mb-4">

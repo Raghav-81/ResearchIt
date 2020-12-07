@@ -1,9 +1,9 @@
 import React , {Component , useState} from "react"
 import "./Trending.css"
 import { Button ,ButtonGroup , ToggleButton ,InputGroup , FormControl} from "react-bootstrap"
-import { Topics } from "./cards.js"
-import  { Papers } from "./cards.js"
-import { Researchers} from "./cards.js"
+import { Topics } from "../Helpers/cards.js"
+import  { Papers } from "../Helpers/cards.js"
+import { Researchers} from "../Helpers/cards.js"
 
 function ButtonToggle() {
   const [radioValue, setRadioValue] = useState('1');

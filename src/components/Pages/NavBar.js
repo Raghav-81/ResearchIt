@@ -1,8 +1,8 @@
 import React ,{useContext} from 'react'
 import { Link} from 'react-router-dom';
 import { Navbar, Form, FormControl, Button, Nav } from 'react-bootstrap'
-import UserContext from "./context/UserContext";
-import Logo from './logo.png'
+import UserContext from "../context/UserContext";
+import Logo from '../logo.png'
 function NavBar(Login) {
   const { userData, setUserData } = useContext(UserContext);
   const logout = () => {
@@ -12,7 +12,6 @@ function NavBar(Login) {
     });
     localStorage.setItem("auth-token", "");
   };
-  console.log(userData.user)
   return (
   <Navbar bg="success"
           variant="dark"
@@ -34,6 +33,11 @@ function NavBar(Login) {
       <li>
         <Link to="/trending" style={ { marginRight: 10 } }>
           Trending
+        </Link>
+      </li>
+      <li>
+        <Link to="/profile" style={ { marginRight: 10 } }>
+          Profile
         </Link>
       </li>
     </Nav>

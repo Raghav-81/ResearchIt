@@ -1,9 +1,9 @@
 import React , {useState, useContext} from 'react'
 import { Form, Button } from 'react-bootstrap'
 import {useHistory} from "react-router-dom"
-import UserContext from "./context/UserContext";
+import UserContext from "../context/UserContext";
 import axios from "axios";
-import ErrorNotice from "./context/ErrorNotice";
+import ErrorNotice from "../Helpers/ErrorNotice";
 
 export function Login(){
   const [email, setEmail] = useState();
@@ -23,7 +23,7 @@ export function Login(){
       );
       setUserData({
         token: loginRes.data.token,
-        user: loginRes.data.user,
+        user: loginRes.data.id,
       });
       localStorage.setItem("auth-token", loginRes.data.token);
       history.push("/");

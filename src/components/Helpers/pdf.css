@@ -1,0 +1,25 @@
+.Pre {
+    
+    background-color: transparent !important;
+    border: none !important;
+    border-color: transparent !important;
+}
+
+.Nxt {
+    
+    background-color: transparent !important;
+    border: none !important;
+    border-color: transparent !important;
+}
+
+.Pre:hover{
+    color: dimgray !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.Nxt:hover{
+    color: dimgray !important;
+    background-color: transparent !important;
+    border: none !important;
+}
